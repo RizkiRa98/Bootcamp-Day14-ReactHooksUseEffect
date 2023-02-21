@@ -1,33 +1,47 @@
-// import { render } from "react-dom";
-// import "./App.css";
-// // import { faker } from "@faker-js/faker";
-// import "semantic-ui-css/semantic.min.css";
-// import { Comment } from "semantic-ui-react";
+import unsplash from "./unsplash";
+import React from "react";
+import SearchBar from "./api";
+import "semantic-ui-css/semantic.min.css";
 
-// //Membuat komponen komentar menggunakan props
+//buat componen get API dari SearcBar ./api.js
+class App extends React.Component {
+  state = { Image: [] };
 
-// // function App(props) {
-// //   //memanggil data yang dibuat di index.js
-// //   const data = props.data;
-// //   //gunakan .map untuk perulangan
-// //   return data.map((d) => (
-// //     <Comment.Group>
-// //       <Comment>
-// //         <Comment.Avatar as="a" src={d.image} />
-// //         <Comment.Content>
-// //           <div className="d-flex flex">
-// //             <Comment.Author>{d.name}</Comment.Author>
-// //             <div className="ml-5">
-// //               <Comment.Metadata>
-// //                 <div>{d.createdDate.toString()}</div>
-// //               </Comment.Metadata>
-// //             </div>
-// //           </div>
-// //           <Comment.Text>{d.post}</Comment.Text>
-// //         </Comment.Content>
-// //       </Comment>
-// //     </Comment.Group>
-// //   ));
-// // }
+  onSearchSubmit = async (term) => {
+    //variabel response get foto
+    const response = await unsplash.get("/search/photos", {
+      params: { query: term },
+    });
+    //set state image dengan response data results
+    this.setState({ Image: response.data.results });
+    console.log(response.data.results);
+  };
+  render() {
+    return (
+      <div className="container mt-2">
+        {/* render componen SearchBar dengan onSubmit */}
+        <SearchBar onSubmit={this.onSearchSubmit} />
+        <div className="ui grid">
+          {this.state.Image.map((Image, index) => (
+            <div className="four wide column">
+              <img
+                className="ui medium image"
+                alt="Image"
+                src={Image.urls.small}
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  objectFit: "cover",
+                  borderRadius: "5px",
+                  border: "4px solid skyblue",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
 
-// export default App;
+export default App;
