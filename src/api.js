@@ -3,11 +3,16 @@ import "semantic-ui-css/semantic.min.css";
 
 //membuat komponen SearchBar
 class SearchBar extends React.Component {
-  state = { term: "" };
+  constructor(props) {
+    super(props);
+    //memanggil gambar menggunakan createRef
+    this.imageRef = React.createRef();
+  }
+
   onFormSubmit = (event) => {
     event.preventDefault();
-
-    this.props.onSubmit(this.state.term);
+    // gunakan current.value untuk mengambil value pada onSubmit
+    this.props.onSubmit(this.imageRef.current.value);
   };
 
   render() {
@@ -18,8 +23,9 @@ class SearchBar extends React.Component {
             <label> Image Search </label>
             <input
               type="text"
-              value={this.state.term}
-              onChange={(e) => this.setState({ term: e.target.value })}
+              // onChange={(event) => this.setState({ term: event.target.value })}
+              // memanggil menggunakan ref
+              ref={this.imageRef}
             ></input>
           </div>
         </form>
