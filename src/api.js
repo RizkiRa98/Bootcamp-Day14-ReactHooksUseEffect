@@ -6,26 +6,27 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     //memanggil gambar menggunakan createRef
-    this.imageRef = React.createRef();
+    this.videoRef = React.createRef();
+    console.log(this.videoRef);
   }
 
   onFormSubmit = (event) => {
     event.preventDefault();
     // gunakan current.value untuk mengambil value pada onSubmit
-    this.props.onSubmit(this.imageRef.current.value);
+    this.props.onSubmit(this.videoRef.current.value);
   };
 
   render() {
     return (
-      <div className="ui segment">
+      <div className="ui segment mt-2" style={{ backgroundColor: "#F7F7F7" }}>
         <form onSubmit={this.onFormSubmit} className="ui form">
           <div className="Field">
-            <label> Image Search </label>
+            <label> Video Search </label>
             <input
               type="text"
               // onChange={(event) => this.setState({ term: event.target.value })}
               // memanggil menggunakan ref
-              ref={this.imageRef}
+              ref={this.videoRef}
             ></input>
           </div>
         </form>
