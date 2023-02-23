@@ -1,5 +1,6 @@
 import React from "react";
 
+//komponen form
 class Form extends React.Component {
   constructor(props) {
     super(props);
